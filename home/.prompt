@@ -1,0 +1,34 @@
+# Prompt
+#
+# Author: Robert Phan
+#
+function prompt_status { #{{{
+    STATUS=`jobs | wc -l | tr -d " " | grep -v '^0$'`
+
+    # {{{ Git status
+#    CWD=`pwd`
+#    cd $HOME
+#    CHANGED=`git st|grep '# Change'`
+#    SYNC=`git st|grep '# Your branch is ahead of'`
+#
+#    if [ -n "$CHANGED" ]; then
+#        STATUS="$STATUS+"
+#    fi
+#
+#    if [ -n "$SYNC" ]; then
+#        STATUS="$STATUS!"
+#    fi
+#    cd "$CWD"
+    #}}}
+
+    if [ -n "$STATUS" ]; then
+        echo "($STATUS)"
+    fi
+
+} #}}}
+
+export -f prompt_status
+export PS1='\[\033[1;31m\][\[\033[1;32m\]\u@\h\[\033[0;37m\]: \[\033[1;34m\]\W \[\033[1;31m\]]\[\033[0;37m\]`prompt_status`\$\[\033[0m\] '
+export SUDO_PS1='\[\033]2;--SUDO--\007\]\[\033[1;31m\][\[\033[1;32m\]\u@\h\[\033[0;37m\]: \[\033[1;34m\]\W \[\033[1;31m\]]\[\033[0;37m\]\$\[\033[0m\] '
+
+# vim:ft=sh:fdm=marker

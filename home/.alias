@@ -1,0 +1,39 @@
+#
+# File:   .alias
+# Author: Bob Phan
+#
+
+alias l='/bin/ls'
+alias lo='/bin/ls'
+LS_PAGER="| less --quit-if-one-screen -X --QUIT-AT-EOF"
+alias ls="lo -lphG $LS_PAGER"
+alias la="lo -AlphG $LS_PAGER"
+
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+
+alias grep='grep --color'
+alias hg='history | grep -i'
+alias envg='env | grep -i'
+alias lsg='ls | grep -i'
+alias psg='ps aux | grep -i'
+
+# This makes it easy to change the title of an xterm
+function xterm_title {
+    echo -en "\033]2;$@\007"
+}
+export -f xterm_title
+function tab_title {
+    echo -en "\033]1;$@\007"
+}
+export -f tab_title
+
+alias less='less -r'
+
+function git_diff() {
+    git diff --no-ext-diff -w "$@"
+}
+export -f git_diff
+
+alias cplpass='lpass show --password -c'

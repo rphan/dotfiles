@@ -1,0 +1,34 @@
+OS_VERSION=`uname`
+OS=`echo $OS_VERSION | sed -e 's/-.*$//'`
+HOSTNAME=`uname -n`
+
+HOST_SPECIFIC_RC=".bashrc_$HOSTNAME"
+
+DO_KEYCHAIN=1
+DO_BASH_COMPLETION=1
+DO_VI_MODE=1
+
+DO_LS_MOD=1
+DO_LS_PAGE=1
+
+DO_SAFEMODE=1
+LS_LESS_PARAMS='--quit-if-one-screen -X --QUIT-AT-EOF'
+
+case $OS in
+    'Linux')
+        export LS_PARAMS="ph --color"
+    ;;
+    'Darwin')
+        export DO_KEYCHAIN=0
+        export CLICOLOR_FORCE=1
+        export LS_PARAMS=phG
+    ;;
+    'CYGWIN_NT')
+        export LS_PARAMS="ph --color"
+    ;;
+    'OpenBSD')
+        export LS_PARAMS="ph"
+    ;;
+esac
+
+# vim:ft=sh:ts=4:sts=4:sw=4:et:fdm=marker

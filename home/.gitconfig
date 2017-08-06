@@ -1,0 +1,48 @@
+[alias]
+    st = status
+    ci = commit
+    odiff = --paginate diff --no-ext-diff
+    log1 = log --pretty=oneline
+    l   = log --pretty=oneline --graph -n 10
+    ll  = log --pretty=oneline --graph -n 20
+    lll = log --pretty=oneline --graph
+    sb =  show-branch --color --topo-order
+
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = yellow
+    changed = 9
+    untracked = cyan
+[user]
+    name = "Robert Phan"
+    email = robert.phan@gmail.com
+
+[status]
+    relativePaths = true
+
+[diff]
+    external = gitdiffwrapper
+
+[pager]
+    diff = ""
+    log = ""
+
+[core]
+    excludesfile = /homes/rphan/.gitignore_global
+[hub]
+    protocol = ssh

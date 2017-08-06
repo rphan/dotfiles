@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source "$HOME/.bash_os_detect"
+source "$HOME/$HOST_SPECIFIC_CONFIG"
+
+less $LS_LESS_PARAMS $@

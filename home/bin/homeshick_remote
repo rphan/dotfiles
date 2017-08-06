@@ -1,0 +1,50 @@
+#!/bin/bash
+SSH_CMD='ssh -oBatchMode=yes -oStrictHostKeyChecking=no'
+REPOS_DIR='.homesick/repos'
+DEFAULT_CASTLE=dotfiles
+
+function install_homeshick {
+    TARGET=$1
+    cd "$HOME/$REPOS_DIR/homeshick"
+    ${SSH_CMD} $TARGET "mkdir -p $REPOS_DIR/homeshick"
+    git archive --format=tar HEAD |\
+        ${SSH_CMD} $TARGET "(cd $REPOS_DIR/homeshick && tar xf -)"
+}
+function clone_castle {
+    TARGET=$1
+    CASTLE=$2
+    CASTLE_DIR=`(homeshick cd $CASTLE && pwd | sed -e 's,^/,,')`
+
+    STRIP=`echo $HOME | sed -e 's,^/,,'`
+    tar --exclude 'test/homeshick' \
+        --exclude '.vagrant' \
+        -cf - -C $HOME "$REPOS_DIR/$CASTLE" |\
+            ${SSH_CMD} $TARGET tar xvf -
+}
+function link_castle {
+    TARGET=$1
+    CASTLE=$2
+
+    ${SSH_CMD} $TARGET "source \$HOME/.homesick/repos/homeshick/homeshick.sh && homeshick -bfq link $CASTLE"
+}
+function bootstrap_host {
+    TARGET=$1
+    install_homeshick $TARGET
+    clone_castle $TARGET $DEFAULT_CASTLE
+    link_castle  $TARGET $DEFAULT_CASTLE
+}
+
+case "$1" in
+    bootstrap )
+      bootstrap_host $2
+      ;;
+    install )
+      install_homeshick $2
+      ;;
+    clone )
+      clone_castle $2 $3
+      ;;
+    link )
+      link_castle $2 $3
+      ;;
+esac

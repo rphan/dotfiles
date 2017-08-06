@@ -1,0 +1,54 @@
+#
+# File:   .alias
+# Author: Bob Phan
+#
+
+alias l='/bin/ls'
+alias lo='/bin/ls'
+LS_PAGER="| less $LS_LESS_PARAMS"
+alias ls="lo -l$LS_PARAMS $LS_PAGER"
+alias la="lo -Al$LS_PARAMS $LS_PAGER"
+alias lsg='ls | grep -i'
+
+# Then the safe stuff
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+
+# grep aliases
+alias grep='grep --color'
+alias hg='history | grep -i'
+alias envg='env | grep -i'
+if [ $DARWIN ]; then
+    alias psg='ps aux | grep -i'
+else
+    alias psg='ps -eaf | grep -i'
+fi
+
+# This makes it easy to change the title of an xterm
+function xterm_title {
+    echo -en "\033]2;$@\007"
+}
+export -f xterm_title
+function tab_title {
+    echo -en "\033]1;$@\007"
+}
+export -f tab_title
+
+# Program specific changes
+alias less='less -r'
+alias screen='TERM=screen screen'
+alias tmux='tmux -2'
+alias ssh='ssh -C'
+
+function git_diff() {
+    git diff --no-ext-diff -w "$@"
+}
+export -f git_diff
+
+# Mac aliases
+alias mou="open -a mou "
+
+alias cplpass='lpass show --password -c'
+
+# vim:ft=sh:ts=4:sts=4:sw=4:fdm=marker
